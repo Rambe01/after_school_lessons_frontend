@@ -1,0 +1,90 @@
+<div id="app">
+    <header>
+        <h1 v-text="sitename"></h1>
+        <button v-on:click='showCheckout'>
+            {{ cartItemCount }}
+            <i class="fas fa-cart-plus"></i> Checkout
+        </button>
+    </header>
+
+    <main>
+        <div v-if='showLesson'>
+            <div v-for="lesson in sortedLessons" :key="lesson.id">
+                <h2 v-text="lesson.title"></h2>
+                <p>Instructor: {{ lesson.instructor }}</p>
+                <p>Time: {{ lesson.time }}</p>
+                <p>Price: {{ lesson.price }}</p>
+                <button v-on:click='addToCart(lesson)' v-if='canAddToCart(lesson)'>
+                    Enroll
+                </button>
+                <button disabled='disabled' v-else>
+                    Enroll
+                </button>
+            </div>
+        </div>
+        <div v-else>
+            <h2>Checkout</h2>
+            <p>
+                <strong>First Name:</strong>
+                <input v-model.trim="order.firstName" />
+            </p>
+            <p>
+                <strong>Last Name:</strong>
+                <input v-model.trim="order.lastName" />
+            </p>
+            <p>
+                <strong>Email:</strong>
+                <input v-model="order.email" />
+            </p>
+
+            <h2>Order Information</h2>
+            <p>First Name: {{ order.firstName }}</p>
+            <p>Last Name: {{ order.lastName }}</p>
+            <p>Email: {{ order.email }}</p>
+
+            <button v-on:click="submitForm">Enroll Now</button>
+        </div>
+    </main>
+</div>
+
+<script type="text/javascript">
+    var webstore = new Vue({
+        el: '#app',
+        data: {
+            lessons: lessons, // Replace 'products' with your 'lessons' array
+            sitename: 'Middlesex School - After School Lessons',
+            showLesson: true,
+            order: {
+                firstName: '',
+                lastName: '',
+                email: '',
+            },
+            cart: []
+        },
+        methods: {
+            addToCart(lesson) {
+                this.cart.push(lesson.id);
+            },
+            showCheckout() {
+                this.showLesson = !this.showLesson;
+            },
+            submitForm() {
+                alert('Enrollment submitted!');
+            },
+            canAddToCart(lesson) {
+                return lesson.availableSeats > this.cartCount(lesson.id);
+            },
+            cartCount(id) {
+                return this.cart.filter(cartId => cartId === id).length;
+            }
+        },
+        computed: {
+            cartItemCount() {
+                return this.cart.length || "";
+            },
+            sortedLessons() {
+                return this.lessons.sort((a, b) => a.price - b.price);
+            }
+        }
+    });
+</script>

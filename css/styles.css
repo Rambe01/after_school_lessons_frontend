@@ -1,0 +1,410 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+:root {
+    --primary-color: #FFFFFF;
+    --secondary-color: #2D2D2D;
+    --accent-color: #5F5F5F;
+    --text-color: #F5F5DC;
+    --highlight-color: #007BFF;
+    --soft-highlight-color: #0056b3;
+    --shadow-color: #64646F33;
+}
+
+body {
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    background-color: var(--primary-color);
+}
+header {
+    position: fixed;
+}
+main {
+    padding: 40px 0;
+}
+figure {
+    text-align: center;
+}
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+#navigation-bar {
+    width: 100vw;
+    height: 40px;
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav-item {
+    height: 40px;
+    border: solid 1px transparent;
+    min-width: 50px;
+    margin: 0 20px 0 0;
+    color: var(--text-color);
+    font-family: "Montserrat";
+    font-size: 8pt;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.nav-logo {
+    width: 40px;
+}
+.nav-button {
+    background-color: transparent;
+    border: none;
+}
+
+#search-box {
+    width: 30vw;
+    height: 25px;
+    border-radius: 5px;
+    background-color: var(--accent-color);
+    position: relative;
+    margin: 0 20px 0 0;
+    display: flex;
+    align-items: center; /* Vertically center items */
+    justify-content: start; /* Align icon and input to the left */
+}
+.search-icon {
+    position: absolute;
+    left: 10px;
+    color: var(--secondary-color);
+}
+#search-area {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    padding-left: 30px;
+    color: var(--primary-color);
+    font-size: 12pt;
+}
+#search-area:focus {
+    outline-width: 0;
+}
+
+.info-box {
+    width: 270px;
+    height: auto;
+    min-height: 130px;
+    border: 1px solid var(--accent-color);
+    border-radius: 15px;
+    background-color: rgba(45, 45, 45, 0.85); /* A dark gray with some transparency */
+    backdrop-filter: blur(10px); /* Adds the blur effect */
+    -webkit-backdrop-filter: blur(10px);
+    padding: 10px 30px;
+    color: var(--primary-color);
+    font-family: 'Montserrat';
+    font-size: 10pt;
+}
+.info-box > * {
+    display: inline-block;
+}
+#school-info {
+    margin-left: 1vw;
+}
+#information {
+    margin-left: 16vw;
+}
+#contact-info {
+    margin-left: 30vw;
+}
+
+#video-section {
+    width: 100vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    padding: 3vh 0;
+}
+#video-panel {
+    background-color: var(--secondary-color);
+    width: 90vw;
+    height: 15vh;
+    border: none;
+    border-radius: 15px;
+}
+
+#sort-section {
+    max-width: 90vw;
+    margin: 20px auto;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+}
+.filter-section {
+    flex: 1;
+}
+.apply-btn-container {
+    display: flex;
+    align-items: flex-end;
+}
+#sort-section h3 {
+    color: var(--secondary-color);
+    font-family: 'Montserrat';
+    font-size: 12pt;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.filter-group label {
+    width: 80px;
+    margin-right: 10px;
+    color: var(--secondary-color);
+    font-family: 'Poppins';
+    font-weight: 600;
+}
+.sort-options, .filter-options {
+    min-width: 300px;
+    max-height: 30px;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    border: none;
+    padding: 5px 0;
+    margin-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Montserrat';
+    font-size: 12pt;
+}
+.sort-options:hover, .filter-options:hover {
+    background-color: #555;
+}
+.sort-options:focus, .filter-options:focus {
+    outline: none;
+}
+
+
+.tags {
+    margin-top: 20px;
+}
+.tag {
+    display: inline-block;
+    background-color: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-family: 'Montserrat';
+    font-size: 10pt;
+}
+.close-tag {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #fff;
+}
+.close-tag:hover {
+    color: red;
+}
+
+
+.apply-btn {
+    background-color: var(--highlight-color);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.apply-btn:hover {
+    background-color: var(--soft-highlight-color);
+}
+
+#product-section {
+    max-width: 100vw;
+    padding: 0;
+    margin: 0 auto; /* Center the grid section */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 20px; /* Adjust the gap between grid items */
+    justify-items: center; /* Ensures items are centered within the grid */
+}
+
+.product-card {
+    width: 100%; /* Let the product cards take up their container space */
+    max-width: 200px; /* But limit the width */
+    height: auto; /* Adjust height to auto for flexible content */
+    border-radius: 15px;
+    box-shadow: var(--shadow-color) 0px 7px 29px 0px;
+    margin: 0;
+    display: flex; /* Use flexbox to align items */
+    flex-direction: column; /* Stack items vertically */
+    padding: 10px; /* Add some padding for inner spacing */
+}
+
+.product-item {
+    width: 100%;
+    text-align: center;
+    color: var(--accent-color);
+    font-family: 'Poppins';
+    font-size: 12pt;
+    margin-top: 5px; /* Add space above the text */
+}
+
+.product-img {
+    width: 100px; /* Keep the image width */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 5px; /* Space between image and text */
+    align-self: center; /* Center the image within the card */
+}
+
+.product-location,
+.product-avail,
+.product-price {
+    margin: 4px 0; /* Space between each line of text */
+}
+
+.product-location {
+    font-style: italic; /* Keep italic style */
+}
+
+.product-avail {
+    text-decoration: underline; /* Keep underline style */
+}
+
+.product-price {
+    color: var(--highlight-color);
+    font-weight: 600; /* semi-bold */
+}
+
+.add-button {
+    width: 100%;
+    height: 40px;
+    background-color: var(--secondary-color);
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+.add-button:hover {
+    background-color: var(--accent-color);
+}
+
+
+
+.info-box, .contact-box {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100; /* Ensure the box is above other content */
+    top: 50px; /* Adjust as needed */
+    color: #2D2D2D;
+}
+
+.info-box {
+    left: 100px; /* Adjust this to position it below the "INFO" button */
+}
+
+.contact-box {
+    left: 200px; /* Adjust this to position it below the "CONTACT" button */
+}
+
+/* Ensures the navigation items are aligned */
+.nav-item {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.cart-item {
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 15px; 
+    padding: 10px; /* Padding inside each cart item */
+    border: 1px solid #ddd; /* Optional: add a border for better visibility */
+    border-radius: 5px; /* Optional: rounded corners */
+    background-color: #f9f9f9; /* Optional: light background for each item */
+}
+
+
+.cart-item-img {
+    width: 50px; 
+    height: auto; 
+    margin-right: 10px; 
+}
+
+.cart-item h3 {
+    margin: 0; /* Remove default margin for the title */
+    font-size: 1.1em; /* Adjust font size if needed */
+}
+
+.cart-item p {
+    margin: 5px 0; /* Space above and below each description */
+    margin-left: 100px;
+}
+
+.cart-item button{
+    margin: 5px 0;
+    margin-left: 20px;
+}
+
+#checkout-form {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.checkout-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.checkout-details h3 {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.checkout-details label {
+    margin-top: 10px;
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.checkout-details input[type="text"],
+.checkout-details input[type="email"],
+.checkout-details textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.checkout-details textarea {
+    resize: vertical;
+}
+
+.checkout-button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.checkout-button:hover {
+    background-color: #45a049;
+}
+
+.checkout-details input[type="radio"] {
+    margin-right: 10px;
+}
+

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        name="description"
+        content="A Middlesex School - After school lessons website which offers various lessons that students or parents on behalf of their children can choose from, to acquire help in any subject."
+    />
+    <meta
+        name="keywords"
+        content="After School Lessons, Help Classes, A Middlesex School"
+    />
+    <meta name="author" content="Rohan Arjun Tambe" />
+    <title>A Middlesex School</title>
+    <link rel="icon" type="image/x-icon" href="assets/mdx photo.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/mediaqueries.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #f0f0f0;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-box {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            position: absolute;
+            z-index: 1000;
+            padding: 10px;
+            width: 300px;
+            display: none; /* Hidden by default */
+        }
+
+        #navigation-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        #search-box {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        #search-area {
+            margin-left: 5px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        .filter-section {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .apply-btn-container {
+            text-align: right;
+        }
+
+        .product-card {
+            border: 1px solid #ddd; /* Add a border for visibility */
+            border-radius: 8px; /* Rounded corners */
+            padding: 15px; /* Add padding inside the card */
+            margin: 15px; /* Space between product cards */
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center align children */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            width: 220px; /* Set a fixed width for uniformity */
+        }
+
+        .product-img {
+            width: 100%; /* Make images responsive */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        button {
+            background-color: blue;
+            min-width: 100px;
+            height: 30px;
+            border: none;
+            color: white;
+            cursor: pointer; /* Change cursor to pointer */
+        }
+
+        button:hover {
+            background-color: #4a73d1;
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <section id="navigation-bar">
+                <figure
+                    @mouseover="showSchool = true"
+                    @mouseleave="showSchool = false"
+                    class="nav-item"
+                >
+                    <img v-bind:src="school.logo" class="nav-logo" />
+                </figure>
+                <p
+                    @mouseover="showInfo = true"
+                    @mouseleave="showInfo = false"
+                    class="nav-item"
+                >
+                    INFO
+                </p>
+                <p
+                    @mouseover="showContact = true"
+                    @mouseleave="showContact = false"
+                    class="nav-item"
+                >
+                    CONTACT
+                </p>
+                <div id="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" name="search" id="search-area" />
+                </div>
+                <button class="nav-item nav-button" v-on:click="showSortSection">
+                    SORT
+                </button>
+                <button class="nav-item nav-button" v-on:click="showCheckout">
+                    {{ cartItemCount }} CHECKOUT <i class="fa-solid fa-cart-shopping"></i>
+                </button>
+            </section>
+            <div
+                @mouseover="showSchool = true"
+                @mouseleave="showSchool = false"
+                id="school-info"
+                v-show="showSchool"
+                class="info-box"
+            >
+                <figure class="nav-item">
+                    <img v-bind:src="school.logo" style="width: 50px" />
+                </figure>
+                <h1>A Middlesex School</h1>
+                <h2>by Rohan</h2>
+            </div>
+            <div
+                @mouseover="showInfo = true"
+                @mouseleave="showInfo = false"
+                id="information"
+                v-show="showInfo"
+                class="info-box"
+            >
+                <p>This web app will help students and</p>
+                <br />
+                <p>parents to explore and buy after-</p>
+                <br />
+                <p>school classes and activities. Any user can</p>
+                <br />
+                <p>browse lessons by subject, location,</p>
+                <br />
+                <p>price, and availability. The app gives an</p>
+                <br />
+                <p>intuitive, dynamic shopping cart and checkout</p>
+                <br />
+                <p>experience for smooth and easy enrollment.</p>
+            </div>
+            <div
+                @mouseover="showContact = true"
+                @mouseleave="showContact = false"
+                id="contact-info"
+                v-show="showContact"
+                class="info-box"
+            >
+                <p>Our Hotline is <a href="tel:+987654321">+98 765 4321</a>,</p>
+                <br />
+                <p>For SMS <a href="sms:1234">"1234"</a>,</p>
+                <br />
+                <p>
+                    Or Email Us at
+                    <a href="mailto:someone@example.com">xyz@gmail.com</a>
+                </p>
+            </div>
+        </header>
+        <main>
+            <section id="video-section">
+                <div id="video-panel"></div>
+            </section>
+            <section id="sort-section" v-if="showSort">
+                <div class="filter-section">
+                    <h3><i class="fas fa-filter"></i> Sort & Filter</h3>
+                    <div class="filter-group">
+                        <label>Subject:</label>
+                        <select id="subject-sorter" class="sort-options" name="subjects">
+                            <option value="" disabled selected hidden>Sort by Subject</option>
+                            <option value="Asc to Desc">Asc to Desc</option>
+                            <option value="Desc to Asc">Desc to Asc</option>
+                        </select>
+                        <select id="subject-filter" class="filter-options" name="subjects">
+                            <option value="" disabled selected hidden>Filter by Subject</option>
+                            <option value="Computer">Computer</option>
+                            <option value="English">English</option>
+                            <option value="History">History</option>
+                            <option value="Maths">Maths</option>
+                            <option value="Science">Science</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Location:</label>
+                        <select id="location-sorter" class="sort-options" name="locations">
+                            <option value="" disabled selected hidden>Sort by Location</option>
+                            <option value="Asc to Desc">Asc to Desc</option>
+                            <option value="Desc to Asc">Desc to Asc</option>
+                        </select>
+                        <select id="location-filter" class="filter-options" name="locations">
+                            <option value="" disabled selected hidden>Filter by Location</option>
+                            <option value="Dubai">Dubai</option>
+                            <option value="London">London</option>
+                            <option value="Mauritius">Mauritius</option>
+                            <option value="New York">New York</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Seats:</label>
+                        <select id="seats-sorter" class="sort-options" name="seats">
+                            <option value="" disabled selected hidden>Sort by Availability</option>
+                            <option value="Most seats available first">Most seats available first</option>
+                            <option value="Least seats available first">Least seats available first</option>
+                        </select>
+                        <select id="seats-filter" class="filter-options" name="seats">
+                            <option value="" disabled selected hidden>Filter by Availability</option>
+                            <option value="1-5 seats are available">1-5 seats are available</option>
+                            <option value="6-10 seats are available">6-10 seats are available</option>
+                            <option value="More than 10 seats">More than 10 seats are available</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Price:</label>
+                        <select id="price-sorter" class="sort-options" name="price">
+                            <option value="" disabled selected hidden>Sort by Price</option>
+                            <option value="From Low to High">From Low to High</option>
+                            <option value="From High to Low">From High to Low</option>
+                        </select>
+                        <select id="price-filter" class="filter-options" name="seats">
+                            <option value="" disabled selected hidden>Filter by Price</option>
+                            <option value="Under 75 AED">Under 75 AED</option>
+                            <option value="75 AED - 150 AED">75 AED - 150 AED</option>
+                            <option value="150 AED - 350 AED">150 AED - 350 AED</option>
+                            <option value="Over 350 AED">Over 350 AED</option>
+                        </select>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Math <span class="close-tag">X</span></span>
+                    </div>
+                </div>
+                <div class="apply-btn-container">
+                    <button class="apply-btn">Apply</button>
+                </div>
+            </section>
+            <section id="product-section">
+                <div v-for="product in products" :key="product.id" class="product-card">
+                    <figure>
+                        <img v-bind:src="product.img" class="product-img" />
+                    </figure>
+                    <h2 class="product-item">{{ product.title }}</h2>
+                    <p class="product-item">{{ product.description }}</p>
+                    <p class="product-price">Price: {{ product.price }} AED</p>
+                    <button v-on:click="addToCart(product.id)" v-if="product.available">
+                        Add to Cart
+                    </button>
+                    <button disabled v-else>
+                        Out of Stock
+                    </button>
+                </div>
+            </section>
+            <section id="checkout-section" v-if="showCheckoutSection">
+                <h2>Checkout</h2>
+                <p>
+                    <strong>First Name:</strong>
+                    <input v-model.trim="order.firstName" />
+                </p>
+                <p>
+                    <strong>Last Name:</strong>
+                    <input v-model.trim="order.lastName" />
+                </p>
+                <p>
+                    <strong>Address:</strong> <input v-model="order.address" />
+                </p>
+                <p>
+                    <strong>City:</strong> <input v-model="order.city" />
+                </p>
+                <p>
+                    <strong>State:</strong>
+                    <select v-model="order.state">
+                        <option disabled value="">State</option>
+                        <option v-for="(state, key) in states" v-bind:value="state">{{ key }}</option>
+                    </select>
+                </p>
+                <p>
+                    <strong>Zip/Postal Code:</strong>
+                    <input v-model.number="order.zip" type="number" />
+                </p>
+                <p>
+                    <input type="checkbox" id="gift" value="true" v-model="order.gift" v-bind:true-value="order.sendGift" v-bind:false-value="order.dontSendGift" />
+                    <label for="gift">Ship as Gift?</label>
+                </p>
+                <p>
+                    <input type="radio" id="home" value="Home" v-model="order.method" />
+                    <label for="home">Home</label>
+                    <input type="radio" id="business" value="Business" v-model="order.method" />
+                    <label for="business">Business</label>
+                </p>
+                <h2>Order Information</h2>
+                <p>First Name: {{ order.firstName }}</p>
+                <p>Last Name: {{ order.lastName }}</p>
+                <p>Address: {{ order.address }}</p>
+                <p>City: {{ order.city }}</p>
+                <p>Zip: {{ order.zip }}</p>
+                <p>State: {{ order.state }}</p>
+                <p>Gift?: {{ order.gift }}</p>
+                <p>Home or Business?: {{ order.method }}</p>
+                <button v-on:click="submitOrder">Place Order</button>
+            </section>
+        </main>
+    </div>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                school: {
+                    logo: 'assets/mdx photo.png',
+                },
+                showSchool: false,
+                showInfo: false,
+                showContact: false,
+                showSort: false,
+                showCheckoutSection: false,
+                order: {
+                    firstName: '',
+                    lastName: '',
+                    address: '',
+                    city: '',
+                    zip: '',
+                    state: '',
+                    method: 'Home',
+                    gift: false,
+                    sendGift: 'Send as a gift',
+                    dontSendGift: 'Do not send as a gift',
+                },
+                states: {
+                    AL: 'Alabama',
+                    AR: 'Arizona',
+                    CA: 'California',
+                    NV: 'Nevada',
+                    NY: 'New York',
+                    DXB: 'Dubai'
+                },
+                products: [
+                    {
+                        id: 1,
+                        title: "Math Lesson",
+                        description: "An in-depth look at Algebra and Calculus.",
+                        price: 30,
+                        img: 'assets/math photo.png',
+                        available: true,
+                    },
+                    {
+                        id: 2,
+                        title: "English Tutoring",
+                        description: "Personalized tutoring sessions for English.",
+                        price: 50,
+                        img: 'assets/english photo.png',
+                        available: true,
+                    },
+                    {
+                        id: 3,
+                        title: "Science Workshop",
+                        description: "Hands-on experiments and projects.",
+                        price: 100,
+                        img: 'assets/science photo.png',
+                        available: true,
+                    },
+                    {
+                        id: 4,
+                        title: "History Lesson",
+                        description: "A lesson that tells us which mistakes we should not repeat.",
+                        price: 200,
+                        img: 'assets/history photo.jpeg',
+                        available: true,
+                    },
+                    {
+                        id: 5,
+                        title: "Computer Theory and Practicals",
+                        description: "Become the tech-savvy genius you want, the easy way.",
+                        price: 300,
+                        img: 'assets/computer photo.png',
+                        available: true,
+                    },
+                ],
+                cart: [],
+            },
+            methods: {
+                addToCart(productId) {
+                    this.cart.push(productId);
+                },
+                showCheckout() {
+                    this.showCheckoutSection = true;
+                },
+                submitOrder() {
+                    alert('Order submitted!');
+                },
+                showSortSection() {
+                    this.showSort = !this.showSort;
+                },
+            },
+            computed: {
+                cartItemCount() {
+                    return this.cart.length || "";
+                },
+            },
+        });
+    </script>
+</body>
+</html>
+
