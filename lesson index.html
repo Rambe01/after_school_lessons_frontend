@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A Middlesex School - After school lessons website which offers various lessons that students or parents on behalf of their children can choose from, to accquire help in any subject."
+    />
+    <meta
+      name="keywords"
+      content="After School Lessons, Help Classes, A Middlesex School"
+    />
+    <meta name="author" content="Rohan Arjun Tambe" />
+    <title>A Middlesex School</title>
+    <link rel="icon" type="image/x-icon" href="assets/mdx photo.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/mediaqueries.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <section id="navigation-bar">
+          <figure
+            @mouseover="showSchool = true"
+            @mouseleave="showSchool = false"
+            class="nav-item"
+          >
+            <img v-bind:src="school.logo" class="nav-logo" />
+          </figure>
+          <p
+            @mouseover="showInfo = true"
+            @mouseleave="showInfo = false"
+            class="nav-item"
+          >
+            INFO
+          </p>
+          <p
+            @mouseover="showContact = true"
+            @mouseleave="showContact = false"
+            class="nav-item"
+          >
+            CONTACT
+          </p>
+          <div id="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" name="search" id="search-area" />
+          </div>
+          <button class="nav-item nav-button" v-on:click="showSortSection">
+            SORT
+          </button>
+          <button class="nav-item nav-button">
+            CHECKOUT <i class="fa-solid fa-cart-shopping"></i>
+          </button>
+        </section>
+        <div
+          @mouseover="showSchool = true"
+          @mouseleave="showSchool = false"
+          id="school-info"
+          v-show="showSchool"
+          class="info-box"
+        >
+          <figure class="nav-item">
+            <img v-bind:src="school.logo" style="width: 50px" />
+          </figure>
+          <h1>A Middlesex School</h1>
+          <h2>by Rohan</h2>
+        </div>
+        <div
+          @mouseover="showInfo = true"
+          @mouseleave="showInfo = false"
+          id="information"
+          v-show="showInfo"
+          class="info-box"
+        >
+          <p>This web app will help students and</p>
+          <br />
+          <p>parents to explore and buy after-</p>
+          <br />
+          <p>school classes and activities. Any user can</p>
+          <br />
+          <p>browse lessons by subject, location,</p>
+          <br />
+          <p>price, and availability. The app gives an</p>
+          <br />
+          <p>intuitive,dynamic shopping cart and checkout</p>
+          <br />
+          <p>experience for smooth and easy enrollment.</p>
+        </div>
+        <div
+          @mouseover="showContact = true"
+          @mouseleave="showContact = false"
+          id="contact-info"
+          v-show="showContact"
+          class="info-box"
+        >
+          <p>Our Hotline is <a href="tel:+987654321">+98 765 4321</a>,</p>
+          <br />
+          <p>For SMS <a href="sms:1234">"1234"</a>,</p>
+          <br />
+          <p>
+            Or Email Us at
+            <a href="mailto:someone@example.com">xyz@gmail.com</a>
+          </p>
+        </div>
+      </header>
+      <main>
+        <section id="video-section">
+          <div id="video-panel"></div>
+        </section>
+        <section id="sort-section" v-if="showSort">
+          <div class="filter-section">
+            <h3><i class="fas fa-filter"></i> Sort & Filter</h3>
+            <div class="filter-group">
+              <label>Subject:</label>
+              <select id="subject-sorter" class="sort-options" name="subjects">
+                <option value="" disabled selected hidden>
+                  Sort by Subject
+                </option>
+                <option value="Asc to Desc">Asc to Desc</option>
+                <option value="Desc to Asc">Desc to Asc</option>
+              </select>
+              <select
+                id="subject-filter"
+                class="filter-options"
+                name="subjects"
+              >
+                <option value="" disabled selected hidden>
+                  Filter by Subject
+                </option>
+                <option value="Computer">Computer</option>
+                <option value="English">English</option>
+                <option value="History">History</option>
+                <option value="Maths">Maths</option>
+                <option value="Science">Science</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Location:</label>
+              <select
+                id="location-sorter"
+                class="sort-options"
+                name="locations"
+              >
+                <option value="" disabled selected hidden>
+                  Sort by Location
+                </option>
+                <option value="Asc to Desc">Asc to Desc</option>
+                <option value="Desc to Asc">Desc to Asc</option>
+              </select>
+              <select
+                id="location-filter"
+                class="filter-options"
+                name="locations"
+              >
+                <option value="" disabled selected hidden>
+                  Filter by Location
+                </option>
+                <option value="Dubai">Dubai</option>
+                <option value="London">London</option>
+                <option value="Mauritius">Mauritius</option>
+                <option value="New York">New York</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Seats:</label>
+              <select id="seats-sorter" class="sort-options" name="seats">
+                <option value="" disabled selected hidden>
+                  Sort by Availablity
+                </option>
+                <option value="Most seats available first">
+                  Most seats available first
+                </option>
+                <option value="Least seats available first">
+                  Least seats available first
+                </option>
+              </select>
+              <select id="seats-filter" class="filter-options" name="seats">
+                <option value="" disabled selected hidden>
+                  Filter by Availablity
+                </option>
+                <option value="1-5 seats are available">1-5 seats are available</option>
+                <option value="6-10 seats are available">6-10 seats are available</option>
+                <option value="More than 10 seats">More than 10 seats are available</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Price:</label>
+              <select id="price-sorter" class="sort-options" name="price">
+                <option value="" disabled selected hidden>Sort by Price</option>
+                <option value="From Low to High">From Low to High</option>
+                <option value="From High to Low">From High to Low</option>
+              </select>
+              <select id="price-filter" class="filter-options" name="seats">
+                <option value="" disabled selected hidden>
+                  Filter by Price
+                </option>
+                <option value="Under 75 AED">Under 75 AED</option>
+                <option value="75 AED - 150 AED">75 AED - 150 AED</option>
+                <option value="150 AED - 350 AED">150 AED - 350 AED</option>
+                <option value="Over 350 AED">Over 350 AED</option>
+              </select>
+            </div>
+            <div class="tags">
+              <span class="tag">Math <span class="close-tag">X</span></span>
+            </div>
+          </div>
+          <div class="apply-btn-container">
+            <button class="apply-btn">Apply</button>
+          </div>
+        </section>
+        <section id="product-section">
+          <div
+            v-for="product in products"
+            :key="product.id"
+            class="product-card"
+          >
+            <figure>
+              <img v-bind:src="product.img" class="product-img" />
+            </figure>
+            <h2 class="product-item">{{product.title}}</h2>
+            <p class="product-item product-location">{{product.location}}</p>
+            <p class="product-item product-avail">
+              {{product.availablity}} seats available
+            </p>
+            <p class="product-item product-price">AED {{product.price}}</p>
+            <button class="add-button">ADD TO CART</button>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      let webstore = new Vue({
+        el: "#app",
+        data: {
+          sitename: "The Middlesex School - After School Classes",
+          showSchool: false,
+          showInfo: false,
+          showContact: false,
+          showSort: false,
+          school: {
+            name: "A Middlesex School",
+            logo: "assets/mdx photo.png",
+          },
+          products: [
+            {
+              id: 1000,
+              title: "MATH",
+              location: "New York",
+              availablity: "5",
+              price: 30,
+              img: "assets/math photo.png",
+            },
+            {
+              id: 1001,
+              title: "English",
+              location: "Dubai",
+              availablity: "5",
+              price: 60,
+              img: "assets/english photo.png",
+            },
+            {
+              id: 1002,
+              title: "Science",
+              location: "Mauritius",
+              availablity: "5",
+              price: 120,
+              img: "assets/science photo.png",
+            },
+            {
+              id: 1003,
+              title: "History",
+              location: "London",
+              availablity: "5",
+              price: 240,
+              img: "assets/history photo.jpeg",
+            },
+            {
+              id: 1004,
+              title: "Computer",
+              location: "Dubai",
+              availablity: "5",
+              price: 480,
+              img: "assets/computer photo.png",
+            },
+          ],
+        },
+        methods: {
+          showSortSection: function () {
+            this.showSort = !this.showSort;
+          },
+        },
+        computed: {},
+      });
+    </script>
+  </body>
+</html>
