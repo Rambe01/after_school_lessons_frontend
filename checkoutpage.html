@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Vue.js After school lessons Checkout</title>
+    <title>Vue.js After School Lessons Checkout</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
@@ -135,6 +135,16 @@
             margin-top: 20px;
             text-align: right;
         }
+
+        @media (max-width: 768px) {
+            #app {
+                width: 90vw;
+            }
+
+            .cart-item {
+                flex-direction: column;
+            }
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
 </head>
@@ -169,24 +179,29 @@
         <p>
             <strong>First Name:</strong>
             <input v-model="order.firstName" type="text" @input="saveDetails" />
+        <p v-if="!order.firstName" style="color: red;">First Name is required.</p>
         </p>
         <p>
             <strong>Last Name:</strong>
             <input v-model="order.lastName" type="text" @input="saveDetails" />
+        <p v-if="!order.lastName" style="color: red;">Last Name is required.</p>
         </p>
         <p>
             <strong>Address:</strong>
             <input v-model="order.address" type="text" @input="saveDetails" />
+        <p v-if="!order.address" style="color: red;">Address is required.</p>
         </p>
         <p>
             <strong>City:</strong>
             <select v-model="order.city" @change="saveDetails">
                 <option v-for="(city, key) in cities" :value="city">{{ key }}</option>
             </select>
+        <p v-if="!order.city" style="color: red;">City is required.</p>
         </p>
         <p>
             <strong>Zip/Postal Code:</strong>
             <input v-model.number="order.zip" type="number" @input="saveDetails" />
+        <p v-if="!order.zip" style="color: red;">Zip code is required.</p>
         </p>
         <p>
             <input type="checkbox" id="gift" v-model="order.gift" @change="saveDetails">
@@ -197,9 +212,18 @@
             <label for="home">Home</label>
             <input type="radio" id="business" value="Business" v-model="order.method" @change="saveDetails">
             <label for="business">Business</label>
+        <p v-if="!order.method" style="color: red;">Delivery method is required.</p>
         </p>
 
-        <button :disabled="!completedForm" @click="submitForm">Place Order</button>
+        <!-- Submit Button -->
+        <button :disabled="!completedForm" @click="submitForm" :class="{ 'loading': loading }">
+            Place Order
+        </button>
+
+        <!-- Loading Spinner -->
+        <div v-if="loading" class="loading-spinner">
+            <span>Loading...</span>
+        </div>
     </div>
 
     <script>
@@ -225,7 +249,8 @@
                     UAQ: 'Umm Al Quwain',
                     RAK: 'Ras Al Khaimah',
                     FUJ: 'Fujairah'
-                }
+                },
+                loading: false
             },
             computed: {
                 cartTotal() {
@@ -245,45 +270,34 @@
             },
             methods: {
                 loadCart() {
-                    // Initialize cart from localStorage
-                    const cartData = JSON.parse(localStorage.getItem('cart')) || [];
-                    this.cart = cartData;
+                    this.loading = true;
+                    fetch('https://after-school-lessons-backend.onrender.com/collections/Orders/cart')
+                        .then(response => response.json())
+                        .then(data => {
+                            this.cart = data.cart;
+                            this.order.lessons = this.cart.map(item => ({
+                                lessonTitle: item.title,
+                                price: item.price,
+                                quantity: item.quantity
+                            }));
+                            this.loading = false;
+                        })
+                        .catch(error => {
+                            console.error('Error loading cart data:', error);
+                            this.loading = false;
+                            alert('There was an error loading your cart. Please try again later.');
+                        });
+                },
 
-                    // Populate the lessons array with cart data
-                    this.order.lessons = cartData.map(item => ({
-                        lessonTitle: item.title,
-                        price: item.price,
-                        quantity: item.quantity,
-                    }));
-                },
-                loadDetails() {
-                    // Initialize order from localStorage
-                    const orderData = JSON.parse(localStorage.getItem('order')) || {};
-                    Object.assign(this.order, orderData);
-                },
                 saveDetails() {
-                    // Save order details to localStorage
-                    localStorage.setItem('order', JSON.stringify(this.order));
-                },
-                clearCart() {
-                    // Clear cart data from both the state and localStorage
-                    this.cart = [];
-                    localStorage.removeItem('cart');
+                    // Save order details in the frontend state (send to backend when submitted)
                 },
 
                 submitForm() {
-                    // Prepare the order data
-                    const orderData = {
-                        ...this.order,
-                        lessons: this.cart.map(item => ({
-                            lessonTitle: item.title,
-                            price: item.price,
-                            quantity: item.quantity
-                        }))
-                    };
+                    this.loading = true;
+                    const orderData = this.order;
 
-                    // Send order data to the backend (including the lessons)
-                    fetch('http://localhost:3000/placeOrder', {
+                    fetch('https://after-school-lessons-backend.onrender.com/collections/Orders', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -293,18 +307,45 @@
                         .then(response => response.json())
                         .then(data => {
                             console.log('Order placed:', data);
-                            this.clearCart();  // Clear cart after placing order
-                            this.clearDetails();  // Clear order details form
-                            alert('Order placed successfully!');
+                            this.updateProducts();
                         })
                         .catch(error => {
                             console.error('There is an error while placing the order:', error);
+                            this.loading = false;
                             alert('Order Failed.');
                         });
                 },
 
+                updateProducts() {
+                    this.cart.forEach(product => {
+                        const newSpaces = { availability: product.availability };
+
+                        fetch(`https://after-school-lessons-backend.onrender.com/collections/products/${product._id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(newSpaces),
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('Product availability updated:', data);
+                                this.clearCart();
+                                this.clearDetails();
+                                alert('Order placed successfully!');
+                            })
+                            .catch(error => {
+                                console.error('Error updating product availability:', error);
+                                alert('Update Failed.');
+                            });
+                    });
+                },
+
+                clearCart() {
+                    this.cart = [];
+                },
+
                 clearDetails() {
-                    // Reset order details after order is placed
                     this.order.firstName = '';
                     this.order.lastName = '';
                     this.order.address = '';
@@ -314,9 +355,9 @@
                     this.order.method = '';
                 }
             },
-            mounted() {
+
+            created() {
                 this.loadCart();
-                this.loadDetails();
             }
         });
     </script>

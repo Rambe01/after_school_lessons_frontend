@@ -1,0 +1,104 @@
+/* Mobile first styles */
+body {
+    font-size: 16px;
+}
+
+/* Ensure the app container takes full width on mobile */
+#app {
+    width: 100%;
+    padding: 15px;
+}
+
+/* Stack cart items vertically on small screens */
+.cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+/* Make the cart images smaller for mobile */
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    margin-right: 0;
+    margin-bottom: 10px;
+}
+
+/* Adjust labels and inputs for smaller screens */
+label,
+input,
+select,
+button {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Ensure form inputs are nicely spaced */
+input[type="text"],
+input[type="number"],
+select {
+    padding: 12px;
+}
+
+/* Button styling for small screens */
+button {
+    width: 100%;
+    height: 50px;
+}
+
+/* Text size adjustments for headings */
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+/* Media queries for larger screens */
+@media (min-width: 600px) {
+
+    /* Adjust layout for tablets and medium screens */
+    #app {
+        width: 80vw;
+    }
+
+    .cart-item {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .cart-item img {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Button styling for medium screens */
+    button {
+        width: 200px;
+        height: 56px;
+    }
+}
+
+/* Media queries for large screens */
+@media (min-width: 1024px) {
+
+    /* Adjust the app container for larger screens */
+    #app {
+        width: 60vw;
+    }
+
+    .cart-item {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    /* Increase font size for headings */
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+}
